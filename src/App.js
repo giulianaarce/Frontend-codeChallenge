@@ -8,7 +8,7 @@ export default class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      show: ""
+      show: []
     }
   }
   search = (value)=>{
@@ -17,8 +17,8 @@ export default class App extends React.Component{
     .then( (res) => { return res.json(); })
     .then( (json) =>{
       if(json !== undefined){
+        console.log(json);
         this.setState({ show: json});
-        console.log(this.state.show);
       }
     })
   }
@@ -28,7 +28,12 @@ export default class App extends React.Component{
       <div className="App">
         <h1>Challenge</h1>
         <SearchBox search={this.search}/>
-        <ResultItem show={this.state.show || []}/>
+        <ResultItem 
+          image={this.state.show.image}
+          name={this.state.show.name}
+          summary={this.state.show.summary}
+          site={this.state.show.officialSite}
+        />
       </div>
     );
   }
