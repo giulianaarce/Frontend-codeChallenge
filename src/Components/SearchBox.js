@@ -18,7 +18,7 @@ export default class SearchBox extends React.Component {
  render(){
     return (
           <div >
-              <div className="input-group mb-3" style={{maxWidth: '750px'}}>
+              <div className="input-group mb-3" >
                   <input type="text" className="form-control" placeholder="Ingrese un show" aria-label="Ingrese una búsqueda" aria-describedby="button-addon2" onChange={this.handleChange} />
                   <div className="input-group-append">
                   <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={this.handleClick}>Buscar</button>

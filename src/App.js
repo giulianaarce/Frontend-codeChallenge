@@ -8,12 +8,13 @@ export default class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      show: []
+      show: '',
+      IP: ''
     }
   }
   search = (value)=>{
     const VALOR = value;
-    fetch("https://api.tvmaze.com/singlesearch/shows?q=" + encodeURI(VALOR))
+    fetch("http://localhost:4200/search/shows/" + (VALOR))
     .then( (res) => { return res.json(); })
     .then( (json) =>{
       if(json !== undefined){
@@ -21,6 +22,29 @@ export default class App extends React.Component{
         this.setState({ show: json});
       }
     })
+    
+    // ip
+    fetch('https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json')
+    .then((res) => { return res.json(); })
+    .then((json) => {
+      this.setState({ IP: json})
+    
+
+    //Peticion de un show
+    console.log(this.state.IP.ip);
+    const formatYmd = date => date.toISOString().slice(0, 10);
+    const requestLogs = {
+      fecha: formatYmd(new Date()),
+      textoBusqueda: VALOR,
+      ip: this.state.IP.ip
+    }
+    fetch('http://localhost:4200/peticion',{
+      method: 'POST',
+      body: JSON.stringify(requestLogs),// datos a enviar
+      headers: {'Content-Type':'application/json'}
+    })
+    .then((res) => { return res.json(); })
+    .then((json) => { return console.log(json); })})
   }
   
   render(){
